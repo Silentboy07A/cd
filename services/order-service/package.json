@@ -7,8 +7,9 @@
         "dev": "nodemon index.js"
     },
     "dependencies": {
+        "convex": "^1.3.1",
         "express": "^4.18.2",
-        "convex": "^1.3.1"
+        "jsonwebtoken": "^9.0.3"
     },
     "devDependencies": {
         "nodemon": "^3.0.1"

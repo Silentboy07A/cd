@@ -71,7 +71,40 @@ export default function CartPage() {
                                 <span>${total.toFixed(2)}</span>
                             </div>
                         </div>
-                        <button className="w-full py-3 bg-black text-white rounded-md hover:bg-gray-800 font-medium">
+                        <button
+                            onClick={async () => {
+                                const token = localStorage.getItem('token');
+                                if (!token) {
+                                    window.location.href = '/login';
+                                    return;
+                                }
+
+                                try {
+                                    const res = await fetch('/api/orders/orders', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'Authorization': `Bearer ${token}`
+                                        },
+                                        body: JSON.stringify({
+                                            items: cart.map(item => ({ productId: item.id, quantity: item.quantity, price: item.price })),
+                                            total: total
+                                        })
+                                    });
+
+                                    if (res.ok) {
+                                        alert('Order placed successfully!');
+                                        setCart([]);
+                                    } else {
+                                        alert('Failed to place order');
+                                    }
+                                } catch (e) {
+                                    console.error(e);
+                                    alert('Error processing order');
+                                }
+                            }}
+                            className="w-full py-3 bg-black text-white rounded-md hover:bg-gray-800 font-medium"
+                        >
                             Proceed to Checkout
                         </button>
                     </div>

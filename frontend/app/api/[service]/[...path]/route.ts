@@ -34,6 +34,7 @@ async function handleRequest(req: NextRequest, params: { service: string; path: 
             method: req.method,
             headers: {
                 'Content-Type': 'application/json',
+                ...(req.headers.get('authorization') ? { 'Authorization': req.headers.get('authorization')! } : {}),
             },
         };
 

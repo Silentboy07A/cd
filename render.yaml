@@ -9,7 +9,9 @@ services:
     startCommand: npm start
     envVars:
       - key: CONVEX_URL
-        sync: false # User must provide this in Render Dashboard
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true # User must provide this in Render Dashboard
 
   # Product Service
   - type: web
@@ -21,6 +23,8 @@ services:
     envVars:
       - key: CONVEX_URL
         sync: false
+      - key: JWT_SECRET
+        generateValue: true
 
   # Order Service
   - type: web
@@ -32,6 +36,8 @@ services:
     envVars:
       - key: CONVEX_URL
         sync: false
+      - key: JWT_SECRET
+        generateValue: true
 
   # Payment Service
   - type: web
