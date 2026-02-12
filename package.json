@@ -1,0 +1,20 @@
+
+{
+  "name": "ecommerce-microservices",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "services/*",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:services\" \"npm run dev:frontend\"",
+    "dev:services": "concurrently \"npm run dev --workspace=services/user-service\" \"npm run dev --workspace=services/product-service\" \"npm run dev --workspace=services/order-service\" \"npm run dev --workspace=services/payment-service\"",
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

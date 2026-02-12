@@ -1,0 +1,45 @@
+
+services:
+  # User Service
+  - type: web
+    name: user-service
+    env: node
+    rootDir: services/user-service
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: CONVEX_URL
+        sync: false # User must provide this in Render Dashboard
+
+  # Product Service
+  - type: web
+    name: product-service
+    env: node
+    rootDir: services/product-service
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: CONVEX_URL
+        sync: false
+
+  # Order Service
+  - type: web
+    name: order-service
+    env: node
+    rootDir: services/order-service
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: CONVEX_URL
+        sync: false
+
+  # Payment Service
+  - type: web
+    name: payment-service
+    env: node
+    rootDir: services/payment-service
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: CONVEX_URL
+        sync: false

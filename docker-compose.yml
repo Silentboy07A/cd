@@ -1,0 +1,51 @@
+
+version: '3.8'
+
+services:
+  user-service:
+    build: ./services/user-service
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - CONVEX_URL=${CONVEX_URL}
+      - CONVEX_DEPLOYMENT=${CONVEX_DEPLOYMENT}
+    networks:
+      - ecommerce-net
+
+  product-service:
+    build: ./services/product-service
+    ports:
+      - "3002:3002"
+    environment:
+      - PORT=3002
+      - CONVEX_URL=${CONVEX_URL}
+      - CONVEX_DEPLOYMENT=${CONVEX_DEPLOYMENT}
+    networks:
+      - ecommerce-net
+
+  order-service:
+    build: ./services/order-service
+    ports:
+      - "3003:3003"
+    environment:
+      - PORT=3003
+      - CONVEX_URL=${CONVEX_URL}
+      - CONVEX_DEPLOYMENT=${CONVEX_DEPLOYMENT}
+    networks:
+      - ecommerce-net
+
+  payment-service:
+    build: ./services/payment-service
+    ports:
+      - "3004:3004"
+    environment:
+      - PORT=3004
+      - CONVEX_URL=${CONVEX_URL}
+      - CONVEX_DEPLOYMENT=${CONVEX_DEPLOYMENT}
+    networks:
+      - ecommerce-net
+
+networks:
+  ecommerce-net:
+    driver: bridge
