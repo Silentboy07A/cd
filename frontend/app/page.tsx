@@ -2,23 +2,31 @@
 import ProductCard from '@/components/ProductCard';
 
 async function getProducts() {
-  // In Next.js App Router, we can fetch directly in Server Components
-  // Using our API Gateway or direct service (if internal networking allowed from server)
-  // For local docker-compose, we should use service name or localhost
-  // Since we are running Next.js locally (not in container yet), use localhost
-  // BUT the API Gateway /api/products route is on the SAME Next.js instance, so we can't fetch it easily during SSR unless absolute URL
+  // Use the Next.js API route for Vercel deployment
+  // The API route will handle the Convex database query
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : 'http://localhost:3000';
 
-  // Better approach for SSR: Call the microservice directly
-  const res = await fetch('http://localhost:3002/products', { cache: 'no-store' });
+  try {
+    const res = await fetch(`${baseUrl}/api/products`, {
+      cache: 'no-store',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
 
-  if (!res.ok) {
-    // Fallback or error handling
+    if (!res.ok) {
+      console.error('Failed to fetch products:', res.status);
+      return [];
+    }
+
+    const data = await res.json();
+    return data || [];
+  } catch (error) {
+    console.error('Error fetching products:', error);
     return [];
   }
-
-  const data = await res.json();
-  // Ensure data structure matches expected from Convex query
-  return data || [];
 }
 
 export default async function Home() {
