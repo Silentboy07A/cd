@@ -22,7 +22,7 @@ export const getUserByEmail = query({
 
 // Product Functions
 export const createProduct = mutation({
-    args: { name: v.string(), description: v.string(), price: v.number(), stock: v.number(), imageUrl: v.optional(v.string()) },
+    args: { name: v.string(), description: v.string(), price: v.number(), stock: v.number(), category: v.string(), imageUrl: v.optional(v.string()) },
     handler: async (ctx, args) => {
         return await ctx.db.insert("products", args);
     },

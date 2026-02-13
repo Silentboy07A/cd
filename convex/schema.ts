@@ -15,6 +15,7 @@ export default defineSchema({
         description: v.string(),
         price: v.number(),
         stock: v.number(),
+        category: v.string(), // "Mobile", "Laptop", "Electronics", etc.
         imageUrl: v.optional(v.string()),
     }),
 
