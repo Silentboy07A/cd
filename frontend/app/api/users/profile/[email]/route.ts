@@ -5,8 +5,9 @@ const convex = new ConvexHttpClient(process.env.CONVEX_URL || "https://nautical-
 
 export async function GET(
     request: NextRequest,
-    { params }: { params: { email: string } }
+    context: { params: Promise<{ email: string }> }
 ) {
+    const params = await context.params;
     try {
         const email = params.email;
         const user = await convex.query("api:getUserByEmail" as any, { email });

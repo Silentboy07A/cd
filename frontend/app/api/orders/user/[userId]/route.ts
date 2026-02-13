@@ -23,8 +23,9 @@ function verifyToken(request: NextRequest) {
 
 export async function GET(
     request: NextRequest,
-    { params }: { params: { userId: string } }
+    context: { params: Promise<{ userId: string }> }
 ) {
+    const params = await context.params;
     const user = verifyToken(request);
 
     if (!user) {
