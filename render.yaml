@@ -9,7 +9,7 @@ services:
     startCommand: npm start
     envVars:
       - key: CONVEX_URL
-        sync: false
+        value: https://dependable-squid-960.convex.cloud
       - key: JWT_SECRET
         generateValue: true # User must provide this in Render Dashboard
 
@@ -22,7 +22,7 @@ services:
     startCommand: npm start
     envVars:
       - key: CONVEX_URL
-        sync: false
+        value: https://dependable-squid-960.convex.cloud
       - key: JWT_SECRET
         generateValue: true
 
@@ -35,7 +35,7 @@ services:
     startCommand: npm start
     envVars:
       - key: CONVEX_URL
-        sync: false
+        value: https://dependable-squid-960.convex.cloud
       - key: JWT_SECRET
         generateValue: true
 
@@ -48,4 +48,4 @@ services:
     startCommand: npm start
     envVars:
       - key: CONVEX_URL
-        sync: false
+        value: https://dependable-squid-960.convex.cloud
