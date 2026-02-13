@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ConvexHttpClient } from 'convex/browser';
 
-const convex = new ConvexHttpClient(process.env.CONVEX_URL || "https://nautical-marten-546.convex.cloud");
+const convex = new ConvexHttpClient(
+    process.env.NEXT_PUBLIC_CONVEX_URL ||
+    process.env.CONVEX_URL ||
+    "https://dependable-squid-960.convex.cloud"
+);
 
 export async function GET() {
     try {
