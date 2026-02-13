@@ -1,6 +1,7 @@
 
 [build]
-builder = "docker"
+[build]
+# builder = "docker"
 
 # User Service
 [services.user-service]
