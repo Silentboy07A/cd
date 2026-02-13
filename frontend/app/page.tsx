@@ -32,7 +32,29 @@ export default async function Home({
 }: {
   searchParams: { category?: string }
 }) {
-  const products = await getProducts();
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : 'http://localhost:3000';
+
+  let products = [];
+  let debugError = '';
+
+  try {
+    const res = await fetch(`${baseUrl}/api/products`, {
+      cache: 'no-store',
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    if (!res.ok) {
+      debugError = `Failed to fetch: ${res.status} ${res.statusText}`;
+    } else {
+      products = await res.json();
+    }
+  } catch (error: any) {
+    debugError = `Error: ${error.message}`;
+    console.error('Error fetching products:', error);
+  }
+
   const category = searchParams.category?.toLowerCase();
 
   // Filter products by category if specified
@@ -54,6 +76,18 @@ export default async function Home({
 
   return (
     <div className="bg-[#eaeded] min-h-screen">
+      {/* Debug Info (Only visible if no products) */}
+      {products.length === 0 && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 m-4 rounded relative">
+          <strong className="font-bold">Debug Info:</strong>
+          <span className="block sm:inline"> Products failed to load.</span>
+          <pre className="mt-2 text-xs bg-red-50 p-2 rounded">
+            URL: {baseUrl}/api/products{'\n'}
+            Error: {debugError || 'unknown error'}{'\n'}
+            Env: {process.env.NODE_ENV}
+          </pre>
+        </div>
+      )}
       {/* Hero Banner */}
       <div className="bg-gradient-to-b from-[#37475a] to-transparent relative h-[400px] -mt-4">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/40 to-purple-900/40">
