@@ -1,0 +1,35 @@
+
+[build]
+builder = "docker"
+
+# User Service
+[services.user-service]
+serviceName = "user-service"
+rootDirectory = "services/user-service"
+buildCommand = "npm install"
+startCommand = "npm start"
+envVars = { CONVEX_URL = "https://benevolent-clownfish-573.convex.cloud" }
+
+# Product Service
+[services.product-service]
+serviceName = "product-service"
+rootDirectory = "services/product-service"
+buildCommand = "npm install"
+startCommand = "npm start"
+envVars = { CONVEX_URL = "https://benevolent-clownfish-573.convex.cloud" }
+
+# Order Service
+[services.order-service]
+serviceName = "order-service"
+rootDirectory = "services/order-service"
+buildCommand = "npm install"
+startCommand = "npm start"
+envVars = { CONVEX_URL = "https://benevolent-clownfish-573.convex.cloud" }
+
+# Payment Service
+[services.payment-service]
+serviceName = "payment-service"
+rootDirectory = "services/payment-service"
+buildCommand = "npm install"
+startCommand = "npm start"
+envVars = { CONVEX_URL = "https://benevolent-clownfish-573.convex.cloud" }
