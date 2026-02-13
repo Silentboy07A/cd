@@ -1,23 +1,5 @@
 {
     "buildCommand": "cd frontend && npm install && npm run build",
     "outputDirectory": "frontend/.next",
-    "framework": "nextjs",
-    "rewrites": [
-        {
-            "source": "/api/users/:path*",
-            "destination": "https://user-service.onrender.com/:path*"
-        },
-        {
-            "source": "/api/products/:path*",
-            "destination": "https://product-service.onrender.com/:path*"
-        },
-        {
-            "source": "/api/orders/:path*",
-            "destination": "https://order-service.onrender.com/:path*"
-        },
-        {
-            "source": "/api/payments/:path*",
-            "destination": "https://payment-service.onrender.com/:path*"
-        }
-    ]
+    "framework": "nextjs"
 }
