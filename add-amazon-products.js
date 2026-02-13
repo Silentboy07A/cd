@@ -3,7 +3,7 @@
 
 const { ConvexHttpClient } = require("convex/browser");
 
-const convex = new ConvexHttpClient("https://nautical-marten-546.convex.cloud");
+const convex = new ConvexHttpClient("https://dependable-squid-960.convex.cloud");
 
 const products = [
     // Mobile Category
