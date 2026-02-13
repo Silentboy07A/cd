@@ -53,14 +53,17 @@ graph TD
     ```bash
     npx convex dev
     ```
-    This will configure your Convex project and generate the necessary environment variables.
+3.  **Environment Variables**:
+    -   Create a `.env` file in the root directory.
+    -   Add `CONVEX_URL` and `JWT_SECRET`.
+    -   *Note*: The services currently have a hardcoded fallback for `CONVEX_URL` to ease deployment, but you should set this environment variable in production.
 
-3.  **Start Microservices (Docker)**
+4.  **Start Microservices (Docker)**
     ```bash
     docker-compose up --build
     ```
 
-4.  **Start Frontend**
+5.  **Start Frontend**
     ```bash
     npm run dev:frontend
     ```

@@ -7,7 +7,7 @@ require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3001;
-const convex = new ConvexHttpClient(process.env.CONVEX_URL);
+const convex = new ConvexHttpClient(process.env.CONVEX_URL || "https://benevolent-clownfish-573.convex.cloud");
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'; // In prod, use .env
 
 app.use(express.json());
