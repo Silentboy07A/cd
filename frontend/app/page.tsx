@@ -27,14 +27,30 @@ async function getProducts() {
   }
 }
 
-export default async function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: { category?: string }
+}) {
   const products = await getProducts();
+  const category = searchParams.category?.toLowerCase();
 
-  // Group products by category
+  // Filter products by category if specified
+  let filteredProducts = products;
+  if (category && category !== 'all') {
+    filteredProducts = products.filter((p: any) =>
+      p.category?.toLowerCase() === category
+    );
+  }
+
+  // Group products by category for sections
   const mobiles = products.filter((p: any) => p.category === 'Mobile');
   const laptops = products.filter((p: any) => p.category === 'Laptop');
   const electronics = products.filter((p: any) => p.category === 'Electronics');
   const accessories = products.filter((p: any) => p.category === 'Accessories');
+
+  // If a category is selected, show only that category
+  const showAllSections = !category || category === 'all';
 
   return (
     <div className="bg-[#eaeded] min-h-screen">
@@ -59,78 +75,118 @@ export default async function Home() {
           <div className="bg-white p-6 rounded hover:shadow-lg transition-shadow cursor-pointer">
             <h3 className="font-bold text-lg mb-2">Mobiles & Accessories</h3>
             <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300&h=200&fit=crop" alt="Mobiles" className="w-full h-32 object-cover rounded mb-2" />
-            <a href="#mobiles" className="text-[#007185] hover:text-[#c45500] text-sm">Shop now</a>
+            <a href="/?category=mobile" className="text-[#007185] hover:text-[#c45500] text-sm">Shop now</a>
           </div>
           <div className="bg-white p-6 rounded hover:shadow-lg transition-shadow cursor-pointer">
             <h3 className="font-bold text-lg mb-2">Laptops & Computers</h3>
             <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=300&h=200&fit=crop" alt="Laptops" className="w-full h-32 object-cover rounded mb-2" />
-            <a href="#laptops" className="text-[#007185] hover:text-[#c45500] text-sm">Shop now</a>
+            <a href="/?category=laptop" className="text-[#007185] hover:text-[#c45500] text-sm">Shop now</a>
           </div>
           <div className="bg-white p-6 rounded hover:shadow-lg transition-shadow cursor-pointer">
             <h3 className="font-bold text-lg mb-2">Electronics</h3>
             <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=200&fit=crop" alt="Electronics" className="w-full h-32 object-cover rounded mb-2" />
-            <a href="#electronics" className="text-[#007185] hover:text-[#c45500] text-sm">Explore more</a>
+            <a href="/?category=electronics" className="text-[#007185] hover:text-[#c45500] text-sm">Explore more</a>
           </div>
           <div className="bg-white p-6 rounded hover:shadow-lg transition-shadow cursor-pointer">
             <h3 className="font-bold text-lg mb-2">Deals of the Day</h3>
             <img src="https://images.unsplash.com/photo-1607083206968-13611e3d76db?w=300&h=200&fit=crop" alt="Deals" className="w-full h-32 object-cover rounded mb-2" />
-            <a href="#deals" className="text-[#007185] hover:text-[#c45500] text-sm">See all deals</a>
+            <a href="/?category=all" className="text-[#007185] hover:text-[#c45500] text-sm">See all deals</a>
           </div>
         </div>
 
-        {/* Mobiles Section */}
-        {mobiles.length > 0 && (
-          <div className="mb-8 bg-white p-6 rounded" id="mobiles">
-            <h2 className="text-2xl font-bold mb-4">Best of Mobiles</h2>
+        {/* Category Title */}
+        {category && category !== 'all' && (
+          <div className="mb-6">
+            <h2 className="text-3xl font-bold capitalize">
+              {category === 'mobile' ? 'Mobiles' :
+                category === 'laptop' ? 'Laptops' :
+                  category === 'electronics' ? 'Electronics' :
+                    category === 'accessories' ? 'Accessories' : category}
+            </h2>
+            <p className="text-gray-600 mt-1">
+              {filteredProducts.length} results
+            </p>
+          </div>
+        )}
+
+        {/* Filtered Products (when category selected) */}
+        {category && category !== 'all' && filteredProducts.length > 0 && (
+          <div className="mb-8 bg-white p-6 rounded">
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {mobiles.slice(0, 5).map((product: any) => (
+              {filteredProducts.map((product: any) => (
                 <ProductCard key={product._id} product={product} />
               ))}
             </div>
           </div>
         )}
 
-        {/* Laptops Section */}
-        {laptops.length > 0 && (
-          <div className="mb-8 bg-white p-6 rounded" id="laptops">
-            <h2 className="text-2xl font-bold mb-4">Top Laptops</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {laptops.slice(0, 5).map((product: any) => (
-                <ProductCard key={product._id} product={product} />
-              ))}
-            </div>
-          </div>
-        )}
+        {/* All Sections (when no category or "all" selected) */}
+        {showAllSections && (
+          <>
+            {/* Mobiles Section */}
+            {mobiles.length > 0 && (
+              <div className="mb-8 bg-white p-6 rounded" id="mobiles">
+                <h2 className="text-2xl font-bold mb-4">Best of Mobiles</h2>
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                  {mobiles.slice(0, 5).map((product: any) => (
+                    <ProductCard key={product._id} product={product} />
+                  ))}
+                </div>
+              </div>
+            )}
 
-        {/* Electronics Section */}
-        {electronics.length > 0 && (
-          <div className="mb-8 bg-white p-6 rounded" id="electronics">
-            <h2 className="text-2xl font-bold mb-4">Electronics & Gadgets</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {electronics.slice(0, 5).map((product: any) => (
-                <ProductCard key={product._id} product={product} />
-              ))}
-            </div>
-          </div>
-        )}
+            {/* Laptops Section */}
+            {laptops.length > 0 && (
+              <div className="mb-8 bg-white p-6 rounded" id="laptops">
+                <h2 className="text-2xl font-bold mb-4">Top Laptops</h2>
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                  {laptops.slice(0, 5).map((product: any) => (
+                    <ProductCard key={product._id} product={product} />
+                  ))}
+                </div>
+              </div>
+            )}
 
-        {/* Accessories Section */}
-        {accessories.length > 0 && (
-          <div className="mb-8 bg-white p-6 rounded" id="accessories">
-            <h2 className="text-2xl font-bold mb-4">Must-Have Accessories</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {accessories.slice(0, 5).map((product: any) => (
-                <ProductCard key={product._id} product={product} />
-              ))}
-            </div>
-          </div>
+            {/* Electronics Section */}
+            {electronics.length > 0 && (
+              <div className="mb-8 bg-white p-6 rounded" id="electronics">
+                <h2 className="text-2xl font-bold mb-4">Electronics & Gadgets</h2>
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                  {electronics.slice(0, 5).map((product: any) => (
+                    <ProductCard key={product._id} product={product} />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Accessories Section */}
+            {accessories.length > 0 && (
+              <div className="mb-8 bg-white p-6 rounded" id="accessories">
+                <h2 className="text-2xl font-bold mb-4">Must-Have Accessories</h2>
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                  {accessories.slice(0, 5).map((product: any) => (
+                    <ProductCard key={product._id} product={product} />
+                  ))}
+                </div>
+              </div>
+            )}
+          </>
         )}
 
         {/* No products message */}
-        {products.length === 0 && (
+        {filteredProducts.length === 0 && (
           <div className="bg-white rounded p-12 text-center">
-            <p className="text-gray-600 text-lg font-medium mb-2">No products found</p>
-            <p className="text-gray-500 text-sm">Products are being loaded...</p>
+            <p className="text-gray-600 text-lg font-medium mb-2">
+              {products.length === 0 ? 'No products found' : `No ${category} products found`}
+            </p>
+            <p className="text-gray-500 text-sm">
+              {products.length === 0 ? 'Products are being loaded...' : 'Try selecting a different category'}
+            </p>
+            {category && category !== 'all' && (
+              <a href="/" className="inline-block mt-4 px-6 py-2 bg-[#FFD814] hover:bg-[#F7CA00] text-black rounded-lg font-medium transition-colors">
+                View All Products
+              </a>
+            )}
           </div>
         )}
       </div>

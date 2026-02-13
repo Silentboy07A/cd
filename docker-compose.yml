@@ -1,52 +1,25 @@
 version: '3.8'
 
 services:
-  user-service:
-    build: ./services/user-service
+  # Frontend service
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        - NEXT_PUBLIC_CONVEX_URL=${NEXT_PUBLIC_CONVEX_URL}
+        - CONVEX_URL=${CONVEX_URL}
+        - JWT_SECRET=${JWT_SECRET}
     ports:
-      - "3001:3001"
+      - "3000:3000"
     environment:
-      - PORT=3001
+      - NEXT_PUBLIC_CONVEX_URL=${NEXT_PUBLIC_CONVEX_URL}
       - CONVEX_URL=${CONVEX_URL}
-      - CONVEX_DEPLOYMENT=${CONVEX_DEPLOYMENT}
       - JWT_SECRET=${JWT_SECRET}
+    restart: unless-stopped
     networks:
-      - ecommerce-net
-
-  product-service:
-    build: ./services/product-service
-    ports:
-      - "3002:3002"
-    environment:
-      - PORT=3002
-      - CONVEX_URL=${CONVEX_URL}
-      - CONVEX_DEPLOYMENT=${CONVEX_DEPLOYMENT}
-    networks:
-      - ecommerce-net
-
-  order-service:
-    build: ./services/order-service
-    ports:
-      - "3003:3003"
-    environment:
-      - PORT=3003
-      - CONVEX_URL=${CONVEX_URL}
-      - CONVEX_DEPLOYMENT=${CONVEX_DEPLOYMENT}
-      - JWT_SECRET=${JWT_SECRET}
-    networks:
-      - ecommerce-net
-
-  payment-service:
-    build: ./services/payment-service
-    ports:
-      - "3004:3004"
-    environment:
-      - PORT=3004
-      - CONVEX_URL=${CONVEX_URL}
-      - CONVEX_DEPLOYMENT=${CONVEX_DEPLOYMENT}
-    networks:
-      - ecommerce-net
+      - azon-network
 
 networks:
-  ecommerce-net:
+  azon-network:
     driver: bridge
