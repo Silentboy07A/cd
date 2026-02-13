@@ -65,108 +65,14 @@ export default function LoginPage() {
                         <div className="absolute inset-0 bg-black/10"></div>
                         <div className="relative">
                             <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full mb-4">
-                                <Sparkles className="w-8 h-8 text-white" />
-                            </div>
-                            <h1 className="text-3xl font-bold text-white mb-2">
-                                {isLogin ? 'Welcome Back' : 'Join Us'}
-                            </h1>
-                            <p className="text-white/90 text-sm">
-                                {isLogin ? 'Sign in to your account' : 'Create your account today'}
-                            </p>
-                        </div>
-                    </div>
-
-                    <div className="p-8">
-                        {error && (
-                            <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-r-xl text-sm animate-shake">
-                                <p className="font-medium">⚠️ {error}</p>
-                            </div>
-                        )}
-
-                        <form onSubmit={handleSubmit} className="space-y-5">
-                            {!isLogin && (
-                                <div className="group">
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                        Full Name
-                                    </label>
-                                    <div className="relative">
-                                        <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-purple-600 transition-colors" />
-                                        <input
-                                            type="text"
-                                            value={name}
-                                            onChange={(e) => setName(e.target.value)}
-                                            className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:border-purple-500 focus:bg-white focus:ring-4 focus:ring-purple-500/10 transition-all outline-none"
-                                            placeholder="John Doe"
-                                            required
-                                        />
-                                    </div>
-                                </div>
-                            )}
-
-                            <div className="group">
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    Email Address
-                                </label>
-                                <div className="relative">
-                                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-purple-600 transition-colors" />
-                                    <input
-                                        type="email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:border-purple-500 focus:bg-white focus:ring-4 focus:ring-purple-500/10 transition-all outline-none"
-                                        placeholder="you@example.com"
-                                        required
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="group">
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    Password
-                                </label>
-                                <div className="relative">
-                                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-purple-600 transition-colors" />
-                                    <input
-                                        type="password"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:border-purple-500 focus:bg-white focus:ring-4 focus:ring-purple-500/10 transition-all outline-none"
-                                        placeholder="••••••••"
-                                        required
-                                    />
-                                </div>
-                            </div>
-
-                            <button
-                                type="submit"
-                                disabled={loading}
-                                className="w-full py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
-                            >
-                                {loading ? (
-                                    <span className="flex items-center justify-center gap-2">
-                                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                                        Processing...
-                                    </span>
-                                ) : (
-                                    isLogin ? '✨ Sign In' : '🚀 Create Account'
-                                )}
-                            </button>
-                        </form>
-
-                        <div className="mt-6 pt-6 border-t border-gray-200 text-center">
-                            <p className="text-sm text-gray-600">
-                                {isLogin ? "Don't have an account?" : "Already have an account?"}
-                                <button
-                                    onClick={() => setIsLogin(!isLogin)}
-                                    className="ml-2 text-purple-600 font-semibold hover:text-pink-600 transition-colors"
                                 >
-                                    {isLogin ? 'Sign up' : 'Sign in'}
-                                </button>
-                            </p>
-                        </div>
+                                {isLogin ? 'Sign up' : 'Sign in'}
+                            </button>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
+        </div >
     );
 }
